@@ -30,6 +30,8 @@ function WritLogger:Initialize()
                             , nil
                             , self.default
                             )
+
+    self.DailyRegister()
 end
 
 -- Postamble -----------------------------------------------------------------

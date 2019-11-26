@@ -38,4 +38,5 @@ WritLogger_Define.lua
 
 WritLogger_Log.lua
 WritLogger_Version.lua
+WritLogger_Daily.lua
 WritLogger.lua

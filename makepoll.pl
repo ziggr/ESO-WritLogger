@@ -20,6 +20,7 @@ sub dirls($)
 # push @files, dirls('src');
 push @files, 'WritLogger.lua';
 push @files, 'WritLogger.txt';
+push @files, 'WritLogger_Daily.lua';
 push @files, 'WritLogger_Log.lua';
 print join("\n", @files) . "\n";
 
