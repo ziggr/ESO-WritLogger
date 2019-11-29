@@ -32,3 +32,5 @@ zip:
 
 	rm -rf published/WritLogger
 
+explore:
+	cd tools ; lua explore.lua
