@@ -85,16 +85,14 @@ end
 function WritLogger.DailyRecord(quest_index, crafting_type, lct_result_list)
     local self = WritLogger
     local qinfo = { GetJournalQuestInfo(quest_index) }
-d(1)
--- d(qinfo)
--- d(self.JQI)
-    local qdesc = qinfo[self.JQI.background_text]
     local row = {}
     row.char_name     = self.GetCharacterName()
     row.time          = self.ISODate()
     row.quest_type    = self.QTYPE.DAILY
     row.crafting_type = crafting_type
-    row.desc          = qdesc
+    row.desc          = qinfo[self.JQI.background_text]
+    row.desc2         = qinfo[self.JQI.active_step_text]
+    row.lct           = lct_result_list
 
     for _,result in ipairs(lct_result_list) do
         local cond = nil
@@ -118,8 +116,6 @@ d(1)
             row.cond = row.cond or {}
             table.insert(row.cond, cond)
         end
-
-        row._x = result
     end
 
     self.RecordRow(row)
@@ -129,10 +125,6 @@ function WritLogger.RecordRow(row)
     local self = WritLogger
     self.saved_vars.log = self.saved_vars.log or {}
     self.saved_vars.z = nil
-    -- self.saved_vars.z = self.saved_vars.z or 0
-    -- self.saved_vars.z = self.saved_vars.z + 1
-
-d(2)
     table.insert(self.saved_vars.log, row)
 
 end
