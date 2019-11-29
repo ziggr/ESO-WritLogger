@@ -75,21 +75,26 @@ function WritLogger.DailyParse(quest_index)
     end
     local lct_result_list = LibCraftText.ParseQuest(quest_index)
     if not lct_result_list then
-        self.Logger():Error( "Bug: LibCraftText could not parse qi:%d %s"
+        self.Logger():Warn( "Bug: LibCraftText could not parse qi:%d %s"
                            , quest_index, qname )
-        return
+        lct_result_list = {}
     end
     self.DailyRecord(quest_index, crafting_type, lct_result_list)
 end
 
 function WritLogger.DailyRecord(quest_index, crafting_type, lct_result_list)
     local self = WritLogger
+    local qinfo = { GetJournalQuestInfo(quest_index) }
 d(1)
+-- d(qinfo)
+-- d(self.JQI)
+    local qdesc = qinfo[self.JQI.background_text]
     local row = {}
     row.char_name     = self.GetCharacterName()
     row.time          = self.ISODate()
     row.quest_type    = self.QTYPE.DAILY
     row.crafting_type = crafting_type
+    row.desc          = qdesc
 
     for _,result in ipairs(lct_result_list) do
         local cond = nil
