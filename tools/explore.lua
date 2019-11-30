@@ -3,14 +3,22 @@ dofile("../data/WritLogger.lua")
                         -- Narrow input range to something
                         -- we want to test
 local INPUT_LOG   = WritLoggerVars["Default"]["@ziggr"]["$AccountWide"]["log"]
-local INPUT_RANGE = {20,22}
+local INPUT_RANGE = {1,138}
 local input = {}
 for i = INPUT_RANGE[1], INPUT_RANGE[2] do
     table.insert(input, INPUT_LOG[i])
 end
 
 CHAR_ABBREV = {
-    ["Zhaksyr the Mighty"] = "zh"
+    ["Zhaksyr the Mighty"   ] = "zh"
+,   ["Zithara"              ] = "zi"
+,   ["S'camper"             ] = "sc"
+,   ["Z'foompo"             ] = "fo"
+,   ["Zerwanwe"             ] = "rw"
+,   ["Zagrush"              ] = "ag"
+,   ["Hammer-Meets-Thumb"   ] = "hm"
+,   ["Zifithri"             ] = "tr"
+,   ["Blaithe"              ] = "bl"
 }
 
 CRAFT = {
@@ -31,17 +39,87 @@ cc = nil
 
 REQUIREMENT_ABBREV = {
     [CRAFT.ALCHEMY.type] = {
-        ["Drain Health Poison"] = "xdrh"
-    ,   ["Lorkhan's Tears"    ] = "lork"
-    ,   ["Alkahest"           ] = "alka"
+        ["Drain Health Poison"      ] = "dr.h"
+    ,   ["Damage Health Poison"     ] = "dm.h"
+    ,   ["Damage Magicka Poison"    ] = "dm.m"
+    ,   ["Damage Stamina Poison"    ] = "dm.s"
+    ,   ["Essence of Health"        ] = "es.h", ["Restore Health" ] = "es.h"
+    ,   ["Essence of Magicka"       ] = "es.m", ["Restore Magicka"] = "es.m"
+    ,   ["Essence of Stamina"       ] = "es.s", ["Restore Stamina"] = "es.s"
+    ,   ["Essence of Ravage Health" ] = "rv.h", ["Ravage Health"  ] = "rv.h"
+    ,   ["Ravage Magicka"           ] = "rv.m"
+    ,   ["Ravage Stamina"           ] = "rv.s"
+    ,   ["Lorkhan's Tears"          ] = "lork"
+    ,   ["Alkahest"                 ] = "alka"
+    ,   ["nirnroot"                 ] = "nirn"
+    ,   ["Spider Egg"               ] = "spdr"
+    ,   ["Mudcrab Chitin"           ] = "mudc"
+    ,   ["imp stool"                ] = "imps"
+    ,   ["violet coprinus"          ] = "vcop"
+    ,   ["Nightshade"               ] = "nish"
     }
 ,   [CRAFT.ENCHANTING.type] = {
         ["Glyph of Stamina"   ] = "stam"
-    ,   ["Ta Aspect Rune"     ] = "ta"
+    ,   ["Ta Aspect Rune"     ] = "ta  ", ["Ta"     ] = "ta  "
+
+    ,   ["Kedeko"             ] = "kdko"
+    ,   ["Makko"              ] = "mkko"
+    ,   ["Makkoma"            ] = "mkkm"
+    ,   ["Hade"               ] = "hade"
+    ,   ["Deni"               ] = "deni"
+    ,   ["Rekura"             ] = "rekr"
+    ,   ["Pora"               ] = "pora"
     }
 ,   [CRAFT.PROVISIONING.type] = {
-        ["Firsthold Fruit and Cheese Plate"] = "ffcp"
-    ,   ["Muthsera's Remorse"              ] = "muth"
+        ["Firsthold Fruit and Cheese Plate" ] = "ffcp"
+    ,   ["Muthsera's Remorse"               ] = "muth"
+    ,   ["Four-Eye Grog"                    ] = "fori"
+    ,   ["Hagraven's Tonic"                 ] = "hagr"
+    ,   ["Markarth Mead"                    ] = "mark"
+    ,   ["Mazte"                            ] = "mazt"
+    ,   ["Red Eye Beer"                     ] = "rebr"
+    ,   ["Surilie Syrah Wine"               ] = "suri"
+    ,   ["Baked Potato"                     ] = "pota"
+    ,   ["Banana Surprise"                  ] = "bana"
+    ,   ["Hearty Garlic Corn Chowder"       ] = "hgar"
+    ,   ["Lilmoth Garlic Hagfish"           ] = "lilm"
+    ,   ["Clarified Syrah Wine"             ] = "csyw"
+    ,   ["Grape Preserves"                  ] = "grap"
+    ,   ["Fishy Stick"                      ] = "fish"
+    }
+,   [CRAFT.CLOTHIER.type] = {
+        ["shoes"                        ] = "shoe"
+    ,   ["hat"                          ] = "hat "
+    ,   ["sash"                         ] = "sash"
+    ,   ["robe"                         ] = "robe"
+    ,   ["breeches"                     ] = "bree"
+    ,   ["epaulets"                     ] = "eps "
+    ,   ["helmet"                       ] = "hmet"
+    ,   ["arm cops"                     ] = "armc"
+    ,   ["bracers"                      ] = "brcr"
+    }
+,   [CRAFT.BLACKSMITHING.type] = {
+        ["greatsword"                   ] = "2hgs"
+    ,   ["sabatons"                     ] = "sabt"
+    ,   ["gauntlets"                    ] = "gaun"
+    ,   ["sword"                        ] = "1hsw"
+    ,   ["cuirass"                      ] = "cuir"
+    ,   ["greaves"                      ] = "grev"
+    ,   ["helm"                         ] = "helm"
+    ,   ["dagger"                       ] = "dagg"
+    ,   ["dagger"                       ] = "paul"
+    }
+,   [CRAFT.WOODWORKING.type] = {
+        ["bow"                          ] = "bow "
+    ,   ["inferno staff"                ] = "infs"
+    ,   ["ice staff"                    ] = "ices"
+    ,   ["lightning staff"              ] = "ligs"
+    ,   ["shield"                       ] = "shld"
+    ,   ["restoration staff"            ] = "rest"
+    }
+,   [CRAFT.JEWELRY.type] = {
+        ["necklace"                     ] = "neck"
+    ,   ["ring"                         ] = "ring"
     }
 }
 
