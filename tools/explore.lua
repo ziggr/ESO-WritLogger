@@ -3,7 +3,7 @@ dofile("../data/WritLogger.lua")
                         -- Narrow input range to something
                         -- we want to test
 local INPUT_LOG   = WritLoggerVars["Default"]["@ziggr"]["$AccountWide"]["log"]
-local INPUT_RANGE = {1,138}
+local INPUT_RANGE = {82,138}
 local input = {}
 for i = INPUT_RANGE[1], INPUT_RANGE[2] do
     table.insert(input, INPUT_LOG[i])
@@ -21,6 +21,12 @@ CHAR_ABBREV = {
 ,   ["Blaithe"              ] = "bl"
 }
 
+                        -- ord    = order in output
+                        -- type   = CRAFTING_TYPE_X numeric value
+                        -- abbrev = abbreviation. Not used
+                        -- req_ct = largest number of items (crafted or mats)
+                        --          required for this crafting type's daily
+                        --          writs. Not used.
 CRAFT = {
     ["BLACKSMITHING"] = { ord = 1, type = 1, abbrev = "bs", req_ct = 3 }
 ,   ["CLOTHIER"     ] = { ord = 2, type = 2, abbrev = "cl", req_ct = 3 }
@@ -37,7 +43,8 @@ for k,v in pairs(CRAFT) do cc[v.type] = v end
 for k,v in ipairs(cc) do CRAFT[k] = v end
 cc = nil
 
-REQUIREMENT_ABBREV = {
+--[[
+REQUIREMENT_ABBREV_OLD = {
     [CRAFT.ALCHEMY.type] = {
         ["Drain Health Poison"      ] = "dr.h"
     ,   ["Damage Health Poison"     ] = "dm.h"
@@ -57,6 +64,11 @@ REQUIREMENT_ABBREV = {
     ,   ["imp stool"                ] = "imps"
     ,   ["violet coprinus"          ] = "vcop"
     ,   ["Nightshade"               ] = "nish"
+
+    ,   ["Damage Stamina Poison IX and acquiring Spider Eggs"    ] = "dam stam + spider eggs"
+    ,   ["Damage Magicka Poison IX and acquiring Violet Coprinus"] = "dam mag + violet copr"
+    ,   ["Damage Health Poison IX and acquiring Nightshade"      ] = "dam health + nightshade"
+    ,   ["Essence of Health and acquiring some Nirnroot"         ] = "ess health + nirnroot"
     }
 ,   [CRAFT.ENCHANTING.type] = {
         ["Glyph of Stamina"   ] = "stam"
@@ -69,6 +81,9 @@ REQUIREMENT_ABBREV = {
     ,   ["Deni"               ] = "deni"
     ,   ["Rekura"             ] = "rekr"
     ,   ["Pora"               ] = "pora"
+
+    ,   ["Glyph of Magicka and an Oko Essence Rune"       ] = "mag + oko"
+    ,   ["Glyph of Stamina and acquiring a Ta Aspect Rune"] = "stam + ta"
     }
 ,   [CRAFT.PROVISIONING.type] = {
         ["Firsthold Fruit and Cheese Plate" ] = "ffcp"
@@ -86,6 +101,9 @@ REQUIREMENT_ABBREV = {
     ,   ["Clarified Syrah Wine"             ] = "csyw"
     ,   ["Grape Preserves"                  ] = "grap"
     ,   ["Fishy Stick"                      ] = "fish"
+
+    ,   ["Lilmoth Garlic Hagfish and Hagraven's Tonic"            ] = "pr6a lilmoth + hagraven"
+    ,   ["Firsthold Fruit and Cheese Plate and Muthsera's Remorse"] = "pr6c firsthold + muthsera"
     }
 ,   [CRAFT.CLOTHIER.type] = {
         ["shoes"                        ] = "shoe"
@@ -97,6 +115,9 @@ REQUIREMENT_ABBREV = {
     ,   ["helmet"                       ] = "hmet"
     ,   ["arm cops"                     ] = "armc"
     ,   ["bracers"                      ] = "brcr"
+
+    ,   ["several Robes, Breeches, and Epaulets" ] = "cl.1 robe breech eps"
+    ,   ["several Helmets, Arm Cops, and Bracers"] = "cl.2 helm cops bracers"
     }
 ,   [CRAFT.BLACKSMITHING.type] = {
         ["greatsword"                   ] = "2hgs"
@@ -108,6 +129,9 @@ REQUIREMENT_ABBREV = {
     ,   ["helm"                         ] = "helm"
     ,   ["dagger"                       ] = "dagg"
     ,   ["dagger"                       ] = "paul"
+
+    ,   ["several Greaves, Swords, and Cuirasses"] = "bs.1 1hsw cuirass greaves"
+    ,   ["several Helms, Daggers, and Pauldrons" ] = "bs.2 dagg helm pauldrons"
     }
 ,   [CRAFT.WOODWORKING.type] = {
         ["bow"                          ] = "bow "
@@ -116,10 +140,60 @@ REQUIREMENT_ABBREV = {
     ,   ["lightning staff"              ] = "ligs"
     ,   ["shield"                       ] = "shld"
     ,   ["restoration staff"            ] = "rest"
+
+    ,   ["several Restoration Staves and Shields"] = "ww.1 resto shield"
+    ,   ["several Bows and Shields"              ] = "ww.2 bow shield"
     }
 ,   [CRAFT.JEWELRY.type] = {
         ["necklace"                     ] = "neck"
     ,   ["ring"                         ] = "ring"
+
+    ,   ["three Electrum Rings"             ] = "3 rings"
+    ,   ["Copper Ring and Copper Necklace"  ] = "ring + neck"
+    }
+}
+--]]
+
+-- for desc2 strings to a single abbreviation
+REQUIREMENT_ABBREV = {
+    [CRAFT.ALCHEMY.type] = {
+        ["Damage Stamina Poison IX and acquiring Spider Eggs"       ] = "dam stam + spider eggs"
+    ,   ["Damage Magicka Poison IX and acquiring Violet Coprinus"   ] = "dam mag + violet copr"
+    ,   ["Damage Health Poison IX and acquiring Nightshade"         ] = "dam health + nightshade"
+    ,   ["Essence of Health and acquiring some Nirnroot"            ] = "ess health + nirnroot"
+    }
+,   [CRAFT.ENCHANTING.type] = {
+        ["Glyph of Magicka and an Oko Essence Rune"                 ] = "mag + oko"
+    ,   ["Glyph of Magicka and acquiring a Deni Essence Rune"       ] = "mag + deni"
+    ,   ["Glyph of Magicka and acquiring a Makko Essence Rune"      ] = "mag + makko"
+    ,   ["Glyph of Magicka and acquiring an Oko Essence Rune"       ] = "mag + oko"
+    ,   ["Glyph of Stamina and acquiring a Ta Aspect Rune"          ] = "stam + ta"
+    }
+,   [CRAFT.PROVISIONING.type] = {
+        ["Grape Preserves and Clarified Syrah Wine"                 ] = "ep1a grape + clarified"
+    ,   ["Redoran Peppered Melon and Bitterlemon Tea"               ] = "ep2a redoran peppered + bitterlemon"
+    ,   ["Fishy Stick and Surilie Syrah Wine"                       ] = "dc1a fishy + surilie"
+    ,   ["Lilmoth Garlic Hagfish and Hagraven's Tonic"              ] = "pr6a lilmoth + hagraven"
+    ,   ["Firsthold Fruit and Cheese Plate and Muthsera's Remorse"  ] = "pr6c firsthold + muthsera"
+    }
+,   [CRAFT.CLOTHIER.type] = {
+        ["Robes, Breeches, and Epaulets"        ] = "cl.1 robe breech eps"
+    ,   ["Helmets, Arm Cops, and Bracers"       ] = "cl.2 helm cops bracers"
+    ,   ["Arm Cops, Helmets, and Bracers"       ] = "cl.2 helm cops bracers"
+    }
+,   [CRAFT.BLACKSMITHING.type] = {
+        ["Greaves, Swords, and Cuirasses"       ] = "bs.1 sword cuirass greaves"
+    ,   ["Swords, Cuirass, and Greaves"         ] = "bs.1 sword cuirass greaves"
+    ,   ["Helms, Daggers, and Pauldrons"        ] = "bs.2 dagg helm pauldrons"
+    }
+,   [CRAFT.WOODWORKING.type] = {
+        ["Restoration Staves and Shields"       ] = "ww.1 resto shield"
+    ,   ["Bows and Shields"                     ] = "ww.2 bow shield"
+    }
+,   [CRAFT.JEWELRY.type] = {
+        ["three %S+ Rings"                      ] = "jw.1 3 rings"
+    ,   ["%S+ Ring and %S+ Necklace"            ] = "jw.2 ring + neck"
+    ,   ["%S+ Ring and a %S+ Necklace"          ] = "jw.2 ring + neck"
     }
 }
 
@@ -162,33 +236,6 @@ local function dump(t)
     print(rdump(t))
 end
 
-function ToRowString(input_row)
-    if (not input_row) or (input_row.quest_type ~= "daily") then
-        return nil
-    end
-    local craft = CRAFT[input_row.crafting_type]
-
-    local req_abbrev    = REQUIREMENT_ABBREV[input_row.crafting_type]
-    if not req_abbrev then
-        Error("unknown crafting_type:%d", input_row.crafting_type)
-        return nil
-    end
-
-    local req_list = AbbreviateMulti(req_abbrev, input_row.desc2)
-                        -- Pad to a fixed number of reqs for each crafting type.
-    local req_ct   = craft.req_ct
-    for i = #req_list,req_ct-1 do
-        table.insert(req_list,"")
-    end
-
-    local req      = table.concat(req_list,"\t")
-    local char     = AbbreviateOne(CHAR_ABBREV, input_row.char_name)
-    local date     = input_row.time:sub(1,10)
-    local ctype    = craft.abbrev
-
-    return string.format("%s\t%s\t%s\t%s", date, char, ctype, req)
-end
-
 function Accumulate(input_row, output_row)
     if (not input_row) or (input_row.quest_type ~= "daily") then
         return nil
@@ -203,14 +250,7 @@ function Accumulate(input_row, output_row)
         output               = ToOutput(output_row)
         output_row.date      = date
         output_row.char_name = input_row.char_name
-        output_row.req       = {}
-        for ctype,c in ipairs(CRAFT) do
-            local r = {}
-            for i = 1,c.req_ct do
-                table.insert(r,"")
-            end
-            output_row.req[c.ord] = r
-        end
+        output_row.req       = { ".", ".", "", "", "", "", "" }
     end
 
     local crafting_type = input_row.crafting_type
@@ -221,12 +261,8 @@ function Accumulate(input_row, output_row)
         return output
     end
 
-    local req_list = AbbreviateMulti(req_abbrev, input_row.desc2)
-                        -- Pad to a fixed number of reqs for each crafting type.
-    for i = #req_list,craft.req_ct-1 do
-        table.insert(req_list,"")
-    end
-    output_row.req[craft.ord] = req_list
+    local abbrev = AbbreviateOne(req_abbrev, input_row.desc2)
+    output_row.req[craft.ord] = abbrev
 -- dump(output_row)
     return output
 end
@@ -237,9 +273,9 @@ function ToOutput(output_row)
     table.insert(t, output_row.date)
     table.insert(t, output_row.char_name)
     for ord = 1,7 do
-        local req = output_row.req[ord]
-        local s   = table.concat(req, "\t")
-        table.insert(t, s)
+        local req = output_row.req[ord] or ""
+        -- local s   = table.concat(req, "\t")
+        table.insert(t, req)
     end
     return table.concat(t, "\t")
 end
