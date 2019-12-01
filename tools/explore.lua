@@ -3,9 +3,11 @@ dofile("../data/WritLogger.lua")
                         -- Narrow input range to something
                         -- we want to test
 local INPUT_LOG   = WritLoggerVars["Default"]["@ziggr"]["$AccountWide"]["log"]
-local INPUT_RANGE = {23,50}
+-- local INPUT_RANGE = {23,50} -- PTS
+local INPUT_RANGE = {82,1000}
 local input = {}
 for i = INPUT_RANGE[1], INPUT_RANGE[2] do
+    if not INPUT_LOG[i] then break end
     table.insert(input, INPUT_LOG[i])
 end
 
@@ -164,8 +166,10 @@ REQUIREMENT_ABBREV = {
         ["Damage Stamina Poison IX and acquiring Spider Eggs"       ] = "dam stam + spider eggs"
     ,   ["Damage Magicka Poison IX and acquiring Violet Coprinus"   ] = "dam mag + violet copr"
     ,   ["Damage Health Poison IX and acquiring Nightshade"         ] = "dam health + nightshade"
+    ,   ["Drain Health Poison IX and acquiring Lorkhan's Tears"     ] = "drain health + lorkhan's"
     ,   ["Essence of Health and acquiring some Nirnroot"            ] = "ess health + nirnroot"
     ,   ["Essence of Magicka and acquiring some Imp Stool"          ] = "ess mag + imp stool"
+    ,   ["Essence of Ravage Health and acquiring Alkahest"          ] = "rav health + alkahest"
     }
 ,   [CRAFT.ENCHANTING.type] = {
         ["Glyph of Magicka and an Oko Essence Rune"                 ] = "mag + oko"
@@ -176,15 +180,21 @@ REQUIREMENT_ABBREV = {
     ,   ["Glyph of Stamina and acquiring a Ta Aspect Rune"          ] = "stam + ta"
     ,   ["Glyph of Stamina and a Ta Aspect Rune"                    ] = "stam + ta"
     ,   ["Glyph of Health and a Jehade Potency Rune"                ] = "health + jehade"
+    ,   ["Glyph of Health and acquiring a Kedeko Potency Rune"      ] = "health + kedeko"
+    ,   ["Glyph of Health and acquiring a Hade Potency Rune"        ] = "health + hade"
     }
 ,   [CRAFT.PROVISIONING.type] = {
         ["Grape Preserves and Clarified Syrah Wine"                 ] = "ep1a grape + clarified"
+    ,   ["Roast Corn and Nut Brown Ale"                             ] = "ep1b roast corn + nut brown ale"
     ,   ["Redoran Peppered Melon and Bitterlemon Tea"               ] = "ep2a redoran peppered + bitterlemon"
-    ,   ["Fishy Stick and Surilie Syrah Wine"                       ] = "dc1a fishy + surilie"
+    ,   ["Battaglir Chowder and Eltheric Hooch"                     ] = "ep2b battaglir + elthiric"
+    ,   ["Baked Apples and Lemon Flower Mazte"                      ] = "dc1a baked apples + lemon flower"
+    ,   ["Fishy Stick and Surilie Syrah Wine"                       ] = "dc1c fishy + surilie"
     ,   ["Mammoth Snout Pie and Two%-Zephyr Tea"                    ] = "p44a mammoth snout + two-zephyr"
     ,   ["Skyrim Jazbay Crostata and Blue Road Marathon"            ] = "pr4b skyrim jazbay + blue road"
     ,   ["West Weald Corn Chowder and Comely Wench Whiskey"         ] = "pr5b west weald + comely wench"
     ,   ["Lilmoth Garlic Hagfish and Hagraven's Tonic"              ] = "pr6a lilmoth + hagraven"
+    ,   ["Hearty Garlic Corn Chowder and Markarth Mead"             ] = "pr6b hearty garlic + markarth"
     ,   ["Firsthold Fruit and Cheese Plate and Muthsera's Remorse"  ] = "pr6c firsthold + muthsera"
     }
 ,   [CRAFT.CLOTHIER.type] = {
@@ -207,7 +217,7 @@ REQUIREMENT_ABBREV = {
 ,   [CRAFT.JEWELRY.type] = {
         ["three %S+ Rings"                      ] = "jw.1 3 rings"
     ,   ["%S+ Ring and %S+ Necklace"            ] = "jw.2 ring + neck"
-    ,   ["%S+ Ring and a %S+ Necklace"          ] = "jw.2 ring + neck"
+    ,   ["%S+ Ring and an? %S+ Necklace"          ] = "jw.2 ring + neck"
     ,   ["two %S+ Necklaces"                    ] = "jw.3 2 necklaces"
     }
 }
