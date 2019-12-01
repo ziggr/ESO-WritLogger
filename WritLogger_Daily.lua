@@ -43,26 +43,6 @@ WritLogger.JQI = {
 , instance_display_type = 11 -- number InstanceDisplayType
 }
 
--- GetJournalQuestStepInfo() returns
-WritLogger.JQSI = {
-  step_text             = 1 -- string
-, visibility            = 2 -- number:nilable
-, step_type             = 3 -- number
-, tracker_override_text = 4 -- string
-, num_conditions        = 5 -- number
-}
-
--- GetJournalQuestConditionInfo() returns
-WritLogger.JQCI = {
-  condition_text        = 1 -- string
-, current               = 2 -- number
-, max                   = 3 -- number
-, is_fail_condition     = 4 -- boolean
-, is_complete           = 5 -- boolean
-, is_credit_shared      = 6 -- boolean
-, is_visible            = 7 -- boolean
-}
-
 function WritLogger.DailyParse(quest_index)
     local self = WritLogger
     local qinfo = { GetJournalQuestInfo(quest_index) }
@@ -73,51 +53,18 @@ function WritLogger.DailyParse(quest_index)
                            , quest_index, qname )
         return
     end
-    local lct_result_list = LibCraftText.ParseQuest(quest_index)
-    if not lct_result_list then
-        self.Logger():Warn( "Bug: LibCraftText could not parse qi:%d %s"
-                           , quest_index, qname )
-        lct_result_list = {}
-    end
-    self.DailyRecord(quest_index, crafting_type, lct_result_list)
+    self.DailyRecord(quest_index, crafting_type)
 end
 
-function WritLogger.DailyRecord(quest_index, crafting_type, lct_result_list)
+function WritLogger.DailyRecord(quest_index, crafting_type)
     local self = WritLogger
     local qinfo = { GetJournalQuestInfo(quest_index) }
-    local row = {}
-    row.char_name     = self.GetCharacterName()
-    row.time          = self.ISODate()
-    row.quest_type    = self.QTYPE.DAILY
-    row.crafting_type = crafting_type
-    row.desc          = qinfo[self.JQI.background_text]
-    row.desc2         = qinfo[self.JQI.active_step_text]
-    row.lct           = lct_result_list
-
-    for _,result in ipairs(lct_result_list) do
-        local cond = nil
-                        -- Provisioning: show the food/drink name
-        if result.item and result.item.name then
-            cond = { name = result.item.name }
-
-                        -- Alchemy potion/poison name
-        elseif result.trait and result.trait.name then
-            cond = { name = result.trait.name }
-                        -- Lorkan's Tears or Alkahest
-            if result.solvent then
-                cond.solvent = result.solvent.name
-            end
-                        --  "Acquire Nirnroot"
-        elseif result.material and result.material.name then
-            cond = { name = result.material.name }
-        end
-
-        if cond then
-            row.cond = row.cond or {}
-            table.insert(row.cond, cond)
-        end
-    end
-
+    local row = { time          = self.ISODate()
+                , char_name     = self.GetCharacterName()
+                , quest_type    = self.QTYPE.DAILY
+                , crafting_type = crafting_type
+                , desc2         = qinfo[self.JQI.active_step_text]
+                }
     self.RecordRow(row)
 end
 
