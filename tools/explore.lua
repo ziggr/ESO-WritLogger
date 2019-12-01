@@ -9,6 +9,10 @@ for i = INPUT_RANGE[1], INPUT_RANGE[2] do
     table.insert(input, INPUT_LOG[i])
 end
 
+                        -- Master writ log, accumulated but not output
+                        -- commingled with daily lines.
+MASTER_LINES = {}
+
 CHAR_ABBREV = {
     ["Zhaksyr the Mighty"   ] = "zh"
 ,   ["Zithara"              ] = "zi"
@@ -247,7 +251,7 @@ local function dump(t)
     print(rdump(t))
 end
 
-function Accumulate(input_row, output_row)
+function AccumulateDaily(input_row, output_row)
     if (not input_row) or (input_row.quest_type ~= "daily") then
         return nil
     end
@@ -278,6 +282,97 @@ function Accumulate(input_row, output_row)
     return output
 end
 
+-- From http://lua-users.org/wiki/SplitJoin
+function zo_strsplit(sep,str)
+    sep = sep or "\t"
+    local ret={}
+    local n=1
+    for w in str:gmatch("([^"..sep.."]*)") do
+        ret[n] = ret[n] or w -- only set once (so the blank after a string is ignored)
+        if w=="" then
+            n = n + 1
+        end -- step forwards on a blank but not a string
+    end
+    return unpack(ret)
+end
+
+local function ZO_LinkHandler_ParseLink(link)
+    if type(link) == "string" then
+        local linkStyle, data, text = link:match("|H(.-):(.-)|h(.-)|h")
+        return text, linkStyle, zo_strsplit(':', data)
+    end
+end
+
+-- Break an item_link string into its numeric pieces
+--
+-- The writ1..writ6 fields are what we really want.
+-- Their meanings change depending on the master writ type.
+--
+function ToWritFields(item_link)
+    local x = { ZO_LinkHandler_ParseLink(item_link) }
+    local o = {
+        text             =          x[ 1]
+    ,   link_style       = tonumber(x[ 2])
+    ,   unknown3         = tonumber(x[ 3])
+    ,   item_id          = tonumber(x[ 4])
+    ,   sub_type         = tonumber(x[ 5])
+    ,   internal_level   = tonumber(x[ 6])
+    ,   enchant_id       = tonumber(x[ 7])
+    ,   enchant_sub_type = tonumber(x[ 8])
+    ,   enchant_level    = tonumber(x[ 9])
+    ,   writ1            = tonumber(x[10])
+    ,   writ2            = tonumber(x[11])
+    ,   writ3            = tonumber(x[12])
+    ,   writ4            = tonumber(x[13])
+    ,   writ5            = tonumber(x[14])
+    ,   writ6            = tonumber(x[15])
+    ,   item_style       = tonumber(x[16])
+    ,   is_crafted       = tonumber(x[17])
+    ,   is_bound         = tonumber(x[18])
+    ,   is_stolen        = tonumber(x[19])
+    ,   charge_ct        = tonumber(x[20])
+    ,   unknown21        = tonumber(x[21])
+    ,   unknown22        = tonumber(x[22])
+    ,   unknown23        = tonumber(x[23])
+    ,   writ_reward      = tonumber(x[24])
+    }
+
+    return o
+end
+function AccumulateMaster(input_row)
+    if (not input_row) or (input_row.quest_type ~= "master") then
+        return nil
+    end
+
+    local date                  = input_row.time:sub(1,10)
+    local output_row            = {}
+    output_row.date             = date
+    output_row.char_name        = input_row.char_name
+    output_row.crafting_type    = input_row.crafting_type -- nil for old log
+    output_row.item_link        = input_row.item_link
+
+    local w                     = ToWritFields(input_row.item_link)
+    local t = { output_row.date
+              , output_row.char_name     or ""
+              , output_row.crafting_type or ""
+              , output_row.item_link
+              , w.writ1                  or "?"
+              , w.writ2
+              , w.writ3
+              , w.writ4
+              , w.writ5
+              , w.writ6
+              , math.floor(w.writ_reward/10000)
+              }
+    table.insert(MASTER_LINES, table.concat(t, "\t"))
+end
+
+function OutputMasterList()
+    for _,line in ipairs(MASTER_LINES) do
+        print(line)
+    end
+end
+
 function ToOutput(output_row)
     local t = {}
     if not output_row.date then return nil end
@@ -293,11 +388,13 @@ end
 
 local output_row = {}
 for _,input_row in ipairs(input) do
-    local line = Accumulate(input_row, output_row)
+    AccumulateMaster(input_row)
+    local line = AccumulateDaily(input_row, output_row)
 -- dump(output_row)
     if line then
         print(line)
     end
+
 end
 -- dump(output_row)
 local last_line = ToOutput(output_row)
@@ -305,5 +402,6 @@ if last_line then
     print(last_line)
 end
 
+OutputMasterList()
 
 
