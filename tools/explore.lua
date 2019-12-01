@@ -3,7 +3,7 @@ dofile("../data/WritLogger.lua")
                         -- Narrow input range to something
                         -- we want to test
 local INPUT_LOG   = WritLoggerVars["Default"]["@ziggr"]["$AccountWide"]["log"]
-local INPUT_RANGE = {82,138}
+local INPUT_RANGE = {23,50}
 local input = {}
 for i = INPUT_RANGE[1], INPUT_RANGE[2] do
     table.insert(input, INPUT_LOG[i])
@@ -161,18 +161,25 @@ REQUIREMENT_ABBREV = {
     ,   ["Damage Magicka Poison IX and acquiring Violet Coprinus"   ] = "dam mag + violet copr"
     ,   ["Damage Health Poison IX and acquiring Nightshade"         ] = "dam health + nightshade"
     ,   ["Essence of Health and acquiring some Nirnroot"            ] = "ess health + nirnroot"
+    ,   ["Essence of Magicka and acquiring some Imp Stool"          ] = "ess mag + imp stool"
     }
 ,   [CRAFT.ENCHANTING.type] = {
         ["Glyph of Magicka and an Oko Essence Rune"                 ] = "mag + oko"
     ,   ["Glyph of Magicka and acquiring a Deni Essence Rune"       ] = "mag + deni"
     ,   ["Glyph of Magicka and acquiring a Makko Essence Rune"      ] = "mag + makko"
     ,   ["Glyph of Magicka and acquiring an Oko Essence Rune"       ] = "mag + oko"
+    ,   ["Glyph of Magicka and an Oko Essence Rune"                 ] = "mag + oko"
     ,   ["Glyph of Stamina and acquiring a Ta Aspect Rune"          ] = "stam + ta"
+    ,   ["Glyph of Stamina and a Ta Aspect Rune"                    ] = "stam + ta"
+    ,   ["Glyph of Health and a Jehade Potency Rune"                ] = "health + jehade"
     }
 ,   [CRAFT.PROVISIONING.type] = {
         ["Grape Preserves and Clarified Syrah Wine"                 ] = "ep1a grape + clarified"
     ,   ["Redoran Peppered Melon and Bitterlemon Tea"               ] = "ep2a redoran peppered + bitterlemon"
     ,   ["Fishy Stick and Surilie Syrah Wine"                       ] = "dc1a fishy + surilie"
+    ,   ["Mammoth Snout Pie and Two%-Zephyr Tea"                    ] = "p44a mammoth snout + two-zephyr"
+    ,   ["Skyrim Jazbay Crostata and Blue Road Marathon"            ] = "pr4b skyrim jazbay + blue road"
+    ,   ["West Weald Corn Chowder and Comely Wench Whiskey"         ] = "pr5b west weald + comely wench"
     ,   ["Lilmoth Garlic Hagfish and Hagraven's Tonic"              ] = "pr6a lilmoth + hagraven"
     ,   ["Firsthold Fruit and Cheese Plate and Muthsera's Remorse"  ] = "pr6c firsthold + muthsera"
     }
@@ -180,20 +187,24 @@ REQUIREMENT_ABBREV = {
         ["Robes, Breeches, and Epaulets"        ] = "cl.1 robe breech eps"
     ,   ["Helmets, Arm Cops, and Bracers"       ] = "cl.2 helm cops bracers"
     ,   ["Arm Cops, Helmets, and Bracers"       ] = "cl.2 helm cops bracers"
+    ,   ["Shoes, Hats, and Sashes"              ] = "cl.3 shoes hat sash"
     }
 ,   [CRAFT.BLACKSMITHING.type] = {
         ["Greaves, Swords, and Cuirasses"       ] = "bs.1 sword cuirass greaves"
     ,   ["Swords, Cuirass, and Greaves"         ] = "bs.1 sword cuirass greaves"
     ,   ["Helms, Daggers, and Pauldrons"        ] = "bs.2 dagg helm pauldrons"
+    ,   ["Greatswords, Sabatons, and Gauntlets" ] = "bs.3 g-sword sabatons gaunts"
     }
 ,   [CRAFT.WOODWORKING.type] = {
-        ["Restoration Staves and Shields"       ] = "ww.1 resto shield"
-    ,   ["Bows and Shields"                     ] = "ww.2 bow shield"
+        ["Restoration Staves and Shields"                   ] = "ww.1 resto shield"
+    ,   ["Bows and Shields"                                 ] = "ww.2 bow shield"
+    ,   ["Inferno Staves, Ice Staves, and Lightning Staves" ] = "ww.3 tri-staff"
     }
 ,   [CRAFT.JEWELRY.type] = {
         ["three %S+ Rings"                      ] = "jw.1 3 rings"
     ,   ["%S+ Ring and %S+ Necklace"            ] = "jw.2 ring + neck"
     ,   ["%S+ Ring and a %S+ Necklace"          ] = "jw.2 ring + neck"
+    ,   ["two %S+ Necklaces"                    ] = "jw.3 2 necklaces"
     }
 }
 

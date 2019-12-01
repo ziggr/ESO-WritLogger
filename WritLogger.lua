@@ -32,6 +32,7 @@ function WritLogger:Initialize()
                             )
 
     self.DailyRegister()
+    self.MasterRegister()
 end
 
 -- Postamble -----------------------------------------------------------------
