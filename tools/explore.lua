@@ -244,6 +244,7 @@ function AccumulateMaster(input_row)
         return nil
     end
 
+    local w                     = ToWritFields(input_row.item_link)
     local date                  = input_row.time:sub(1,10)
     local output_row            = {}
     output_row.date             = date
@@ -251,23 +252,95 @@ function AccumulateMaster(input_row)
     output_row.crafting_type    = input_row.crafting_type -- nil for old log
     output_row.item_link        = input_row.item_link
 
-    local w                     = ToWritFields(input_row.item_link)
+    if     input_row.crafting_type == CRAFT.BLACKSMITHING.type
+        or input_row.crafting_type == CRAFT.CLOTHIER.type
+        or input_row.crafting_type == CRAFT.WOODWORKING.type
+        or input_row.crafting_type == CRAFT.JEWELRY.type then
+        output_row.equip_item           = w.writ1
+        output_row.equip_mat_id         = w.writ2
+        output_row.quality              = w.writ3
+        output_row.equip_set_id         = w.writ4
+        output_row.equip_trait_id       = w.writ5
+        if input_row.crafting_type ~= CRAFT.JEWELRY.type then
+            output_row.equip_motif_id   = w.writ6
+        end
+
+    elseif input_row.crafting_type == CRAFT.ALCHEMY.type then
+        output_row.alch_solvent_id      = w.writ1
+        output_row.alch_effect_1        = w.writ2
+        output_row.alch_effect_2        = w.writ3
+        output_row.alch_effect_3        = w.writ4
+    elseif input_row.crafting_type == CRAFT.ENCHANTING.type then
+        output_row.glyph_item_id        = w.writ1
+        output_row.glyph_level_id       = w.writ2
+        output_row.quality              = w.writ3
+    elseif input_row.crafting_type == CRAFT.PROVISIONING.type then
+        output_row.food_drink_id        = w.writ1
+    end
+
     local t = { output_row.date
               , output_row.char_name     or ""
               , output_row.crafting_type or ""
               , output_row.item_link
-              , w.writ1                  or "?"
+              , w.writ1
               , w.writ2
               , w.writ3
               , w.writ4
               , w.writ5
               , w.writ6
               , math.floor(w.writ_reward/10000)
+              , output_row.equip_item           or ""
+              , output_row.equip_mat_id         or ""
+              , output_row.quality              or ""
+              , output_row.equip_set_id         or ""
+              , output_row.equip_trait_id       or ""
+              , output_row.equip_motif_id       or ""
+              , output_row.alch_solvent_id      or ""
+              , output_row.alch_effect_1        or ""
+              , output_row.alch_effect_2        or ""
+              , output_row.alch_effect_3        or ""
+              , output_row.glyph_item_id        or ""
+              , output_row.glyph_level_id       or ""
+              , output_row.quality              or ""
+              , output_row.food_drink_id        or ""
               }
+
     table.insert(MASTER_LINES, table.concat(t, "\t"))
 end
 
+function MasterHeader()
+    local t = { "# date"
+              , "char_name"
+              , "crafting_type"
+              , "item_link"
+              , "writ1"
+              , "writ2"
+              , "writ3"
+              , "writ4"
+              , "writ5"
+              , "writ6"
+              , "voucher_ct"
+              , "equip_item"
+              , "equip_mat_id"
+              , "quality"
+              , "equip_set_id"
+              , "equip_trait_id"
+              , "equip_motif_id"
+              , "alch_solvent_id"
+              , "alch_effect_1"
+              , "alch_effect_2"
+              , "alch_effect_3"
+              , "glyph_item_id"
+              , "glyph_level_id"
+              , "quality"
+              , "food_drink_id"
+              }
+    return table.concat(t, "\t")
+end
+
+
 function OutputMasterList()
+    print(MasterHeader())
     for _,line in ipairs(MASTER_LINES) do
         print(line)
     end
