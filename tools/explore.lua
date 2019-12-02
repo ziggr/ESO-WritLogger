@@ -305,7 +305,6 @@ function AccumulateMaster(input_row)
               , output_row.alch_effect_3        or ""
               , output_row.glyph_item_id        or ""
               , output_row.glyph_level_id       or ""
-              , output_row.quality              or ""
               , output_row.food_drink_id        or ""
               }
 
@@ -336,7 +335,6 @@ function MasterHeader()
               , "alch_effect_3"
               , "glyph_item_id"
               , "glyph_level_id"
-              , "quality"
               , "food_drink_id"
               }
     return table.concat(t, "\t")
