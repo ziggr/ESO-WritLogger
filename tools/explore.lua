@@ -3,8 +3,8 @@ dofile("../data/WritLogger.lua")
                         -- Narrow input range to something
                         -- we want to test
 local INPUT_LOG   = WritLoggerVars["Default"]["@ziggr"]["$AccountWide"]["log"]
--- local INPUT_RANGE = {23,50} -- PTS
-local INPUT_RANGE = {82,1000}
+-- local INPUT_RANGE = {23,1000} -- PTS
+local INPUT_RANGE = {82,1000} -- live
 local input = {}
 for i = INPUT_RANGE[1], INPUT_RANGE[2] do
     if not INPUT_LOG[i] then break end
@@ -14,18 +14,6 @@ end
                         -- Master writ log, accumulated but not output
                         -- commingled with daily lines.
 MASTER_LINES = {}
-
-CHAR_ABBREV = {
-    ["Zhaksyr the Mighty"   ] = "zh"
-,   ["Zithara"              ] = "zi"
-,   ["S'camper"             ] = "sc"
-,   ["Z'foompo"             ] = "fo"
-,   ["Zerwanwe"             ] = "rw"
-,   ["Zagrush"              ] = "ag"
-,   ["Hammer-Meets-Thumb"   ] = "hm"
-,   ["Zifithri"             ] = "tr"
-,   ["Blaithe"              ] = "bl"
-}
 
                         -- ord    = order in output
                         -- type   = CRAFTING_TYPE_X numeric value
@@ -48,117 +36,6 @@ local cc = {}
 for k,v in pairs(CRAFT) do cc[v.type] = v end
 for k,v in ipairs(cc) do CRAFT[k] = v end
 cc = nil
-
---[[
-REQUIREMENT_ABBREV_OLD = {
-    [CRAFT.ALCHEMY.type] = {
-        ["Drain Health Poison"      ] = "dr.h"
-    ,   ["Damage Health Poison"     ] = "dm.h"
-    ,   ["Damage Magicka Poison"    ] = "dm.m"
-    ,   ["Damage Stamina Poison"    ] = "dm.s"
-    ,   ["Essence of Health"        ] = "es.h", ["Restore Health" ] = "es.h"
-    ,   ["Essence of Magicka"       ] = "es.m", ["Restore Magicka"] = "es.m"
-    ,   ["Essence of Stamina"       ] = "es.s", ["Restore Stamina"] = "es.s"
-    ,   ["Essence of Ravage Health" ] = "rv.h", ["Ravage Health"  ] = "rv.h"
-    ,   ["Ravage Magicka"           ] = "rv.m"
-    ,   ["Ravage Stamina"           ] = "rv.s"
-    ,   ["Lorkhan's Tears"          ] = "lork"
-    ,   ["Alkahest"                 ] = "alka"
-    ,   ["nirnroot"                 ] = "nirn"
-    ,   ["Spider Egg"               ] = "spdr"
-    ,   ["Mudcrab Chitin"           ] = "mudc"
-    ,   ["imp stool"                ] = "imps"
-    ,   ["violet coprinus"          ] = "vcop"
-    ,   ["Nightshade"               ] = "nish"
-
-    ,   ["Damage Stamina Poison IX and acquiring Spider Eggs"    ] = "dam stam + spider eggs"
-    ,   ["Damage Magicka Poison IX and acquiring Violet Coprinus"] = "dam mag + violet copr"
-    ,   ["Damage Health Poison IX and acquiring Nightshade"      ] = "dam health + nightshade"
-    ,   ["Essence of Health and acquiring some Nirnroot"         ] = "ess health + nirnroot"
-    }
-,   [CRAFT.ENCHANTING.type] = {
-        ["Glyph of Stamina"   ] = "stam"
-    ,   ["Ta Aspect Rune"     ] = "ta  ", ["Ta"     ] = "ta  "
-
-    ,   ["Kedeko"             ] = "kdko"
-    ,   ["Makko"              ] = "mkko"
-    ,   ["Makkoma"            ] = "mkkm"
-    ,   ["Hade"               ] = "hade"
-    ,   ["Deni"               ] = "deni"
-    ,   ["Rekura"             ] = "rekr"
-    ,   ["Pora"               ] = "pora"
-
-    ,   ["Glyph of Magicka and an Oko Essence Rune"       ] = "mag + oko"
-    ,   ["Glyph of Stamina and acquiring a Ta Aspect Rune"] = "stam + ta"
-    }
-,   [CRAFT.PROVISIONING.type] = {
-        ["Firsthold Fruit and Cheese Plate" ] = "ffcp"
-    ,   ["Muthsera's Remorse"               ] = "muth"
-    ,   ["Four-Eye Grog"                    ] = "fori"
-    ,   ["Hagraven's Tonic"                 ] = "hagr"
-    ,   ["Markarth Mead"                    ] = "mark"
-    ,   ["Mazte"                            ] = "mazt"
-    ,   ["Red Eye Beer"                     ] = "rebr"
-    ,   ["Surilie Syrah Wine"               ] = "suri"
-    ,   ["Baked Potato"                     ] = "pota"
-    ,   ["Banana Surprise"                  ] = "bana"
-    ,   ["Hearty Garlic Corn Chowder"       ] = "hgar"
-    ,   ["Lilmoth Garlic Hagfish"           ] = "lilm"
-    ,   ["Clarified Syrah Wine"             ] = "csyw"
-    ,   ["Grape Preserves"                  ] = "grap"
-    ,   ["Fishy Stick"                      ] = "fish"
-
-    ,   ["Lilmoth Garlic Hagfish and Hagraven's Tonic"            ] = "pr6a lilmoth + hagraven"
-    ,   ["Firsthold Fruit and Cheese Plate and Muthsera's Remorse"] = "pr6c firsthold + muthsera"
-    }
-,   [CRAFT.CLOTHIER.type] = {
-        ["shoes"                        ] = "shoe"
-    ,   ["hat"                          ] = "hat "
-    ,   ["sash"                         ] = "sash"
-    ,   ["robe"                         ] = "robe"
-    ,   ["breeches"                     ] = "bree"
-    ,   ["epaulets"                     ] = "eps "
-    ,   ["helmet"                       ] = "hmet"
-    ,   ["arm cops"                     ] = "armc"
-    ,   ["bracers"                      ] = "brcr"
-
-    ,   ["several Robes, Breeches, and Epaulets" ] = "cl.1 robe breech eps"
-    ,   ["several Helmets, Arm Cops, and Bracers"] = "cl.2 helm cops bracers"
-    }
-,   [CRAFT.BLACKSMITHING.type] = {
-        ["greatsword"                   ] = "2hgs"
-    ,   ["sabatons"                     ] = "sabt"
-    ,   ["gauntlets"                    ] = "gaun"
-    ,   ["sword"                        ] = "1hsw"
-    ,   ["cuirass"                      ] = "cuir"
-    ,   ["greaves"                      ] = "grev"
-    ,   ["helm"                         ] = "helm"
-    ,   ["dagger"                       ] = "dagg"
-    ,   ["dagger"                       ] = "paul"
-
-    ,   ["several Greaves, Swords, and Cuirasses"] = "bs.1 1hsw cuirass greaves"
-    ,   ["several Helms, Daggers, and Pauldrons" ] = "bs.2 dagg helm pauldrons"
-    }
-,   [CRAFT.WOODWORKING.type] = {
-        ["bow"                          ] = "bow "
-    ,   ["inferno staff"                ] = "infs"
-    ,   ["ice staff"                    ] = "ices"
-    ,   ["lightning staff"              ] = "ligs"
-    ,   ["shield"                       ] = "shld"
-    ,   ["restoration staff"            ] = "rest"
-
-    ,   ["several Restoration Staves and Shields"] = "ww.1 resto shield"
-    ,   ["several Bows and Shields"              ] = "ww.2 bow shield"
-    }
-,   [CRAFT.JEWELRY.type] = {
-        ["necklace"                     ] = "neck"
-    ,   ["ring"                         ] = "ring"
-
-    ,   ["three Electrum Rings"             ] = "3 rings"
-    ,   ["Copper Ring and Copper Necklace"  ] = "ring + neck"
-    }
-}
---]]
 
 -- for desc2 strings to a single abbreviation
 REQUIREMENT_ABBREV = {
@@ -275,19 +152,6 @@ local function Error(...)
     print(string.format(...))
 end
 
-local function rdump(t)
-    if type(t) ~= "table" then return tostring(t) end
-
-    local s = "{"
-    for k,v in pairs(t) do s = s..k..":"..rdump(v).." " end
-    s = s.."}"
-    return s
-end
-
-local function dump(t)
-    print(rdump(t))
-end
-
 function AccumulateDaily(input_row, output_row)
     if (not input_row) or (input_row.quest_type ~= "daily") then
         return nil
@@ -315,7 +179,6 @@ function AccumulateDaily(input_row, output_row)
 
     local abbrev = AbbreviateOne(req_abbrev, input_row.desc2)
     output_row.req[craft.ord] = abbrev
--- dump(output_row)
     return output
 end
 
@@ -427,13 +290,11 @@ local output_row = {}
 for _,input_row in ipairs(input) do
     AccumulateMaster(input_row)
     local line = AccumulateDaily(input_row, output_row)
--- dump(output_row)
     if line then
         print(line)
     end
 
 end
--- dump(output_row)
 local last_line = ToOutput(output_row)
 if last_line then
     print(last_line)
