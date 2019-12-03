@@ -73,6 +73,11 @@ function AccumulateDaily(input_row, output_row)
                         -- fresh one.
     local output   = nil
     local date     = input_row.time:sub(1,10)
+
+    WritLogger.DailyRecord( date
+                          , input_row.char_name
+                          , input_row.crafting_type
+                          , input_row.desc2 )
     if (output_row.date      ~= date)
             or (output_row.char_name ~= input_row.char_name ) then
         output               = ToOutput(output_row)
@@ -268,6 +273,30 @@ function ToOutput(output_row)
     return table.concat(t, "\t")
 end
 
+function OutputDailyGrid()
+    local self = WritLogger
+    local dg_lines = {}
+
+                        -- Sort by date
+    local dates = {}
+    for date,_ in pairs(self.DAILY_GRID) do table.insert(dates, date) end
+    table.sort(dates)
+    for _,date in ipairs(dates) do
+        local dg_line = { date }
+        local dg_row = self.DAILY_GRID[date]
+        for char_ord, char_row in ipairs(self.CHAR) do
+            local char_cell = dg_row[char_ord] or self.DailyBlank()
+            local s = table.concat(char_cell, "")
+            table.insert(dg_line, s)
+        end
+        local line = table.concat(dg_line, " ")
+        table.insert(dg_lines, line)
+        print(line)
+    end
+end
+
+
+
 local output_row = {}
 local one_char_accumulator = {}
 local output_char_accumulator = ""
@@ -287,6 +316,7 @@ if last_line then
     print(s.." "..last_line)
 end
 
+OutputDailyGrid()
 OutputMasterList()
 
 

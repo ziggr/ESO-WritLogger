@@ -158,6 +158,11 @@ function WritLogger.table_rcopy(t)
     return tt
 end
 
+function WritLogger.DailyBlank()
+    local r ={ " ", " ", " ", " ", " ", "  ", "  " }
+    return r
+end
+
 -- Add one daily crafting writ to an accumulator.
 -- If the requested date+char_name match the current accumulator, just insert
 -- the daily writ in to the accumulator and return nil.
@@ -172,7 +177,7 @@ function WritLogger.AccumulateDaily(input, accumulator)
         output_accumulator = WritLogger.table_rcopy(accumulator)
         accumulator.date        = date
         accumulator.char_name   = input.char_name
-        accumulator.req_id_list = { " ", " ", " ", " ", " ", "  ", "  " }
+        accumulator.req_id_list = self.DailyBlank()
     end
 
     local ord = CRAFT[input.crafting_type].ord
@@ -188,3 +193,52 @@ function WritLogger.DailyAccumulatorToString(accumulator)
     return table.concat(accumulator.req_id_list,"")
 end
 
+------------------------------------------------------------------------------
+
+WritLogger.CHAR = {
+  ["Zithara"]            = { ord =  1, name = "Zithara"            }
+, ["S'camper"]           = { ord =  2, name = "S'camper"           }
+, ["Z'foompo"]           = { ord =  3, name = "Z'foompo"           }
+, ["Zerwanwe"]           = { ord =  4, name = "Zerwanwe"           }
+, ["Zagrush"]            = { ord =  5, name = "Zagrush"            }
+, ["Hammer-Meets-Thumb"] = { ord =  6, name = "Hammer-Meets-Thumb" }
+, ["Zifithri"]           = { ord =  7, name = "Zifithri"           }
+, ["Blaithe"]            = { ord =  8, name = "Blaithe"            }
+, ["Zhaksyr the Mighty"] = { ord =  9, name = "Zhaksyr the Mighty" }
+, ["Zecorwyn"]           = { ord = 10, name = "Zecorwyn"           }
+, ["Lilwen"]             = { ord = 11, name = "Lilwen"             }
+, ["Alexander Mundus"]   = { ord = 12, name = "Alexander Mundus"   }
+, ["Simone Chevalier"]   = { ord = 13, name = "Simone Chevalier"   }
+, ["Hagnar the Slender"] = { ord = 14, name = "Hagnar the Slender" }
+, ["Daenir Haggertyn"]   = { ord = 15, name = "Daenir Haggertyn"   }
+, ["Zugbesha"]           = { ord = 16, name = "Zugbesha"           }
+, ["Zancalmo"]           = { ord = 17, name = "Zancalmo"           }
+}
+                        -- Index by ord as well as name.
+local cc = {}
+for char_name,_ in pairs(WritLogger.CHAR) do table.insert(cc, char_name) end
+for _,char_name in ipairs(cc) do
+    local char_row = WritLogger.CHAR[char_name]
+    WritLogger.CHAR[char_row.ord] = char_row
+end
+
+                        -- A giant matrix of all char's 10-char summary
+                        --   ["date"] = "char1 char2 char3 ... char11"
+WritLogger.DAILY_GRID = {}
+
+function WritLogger.DailyRecord(date, char_name, crafting_type, desc2)
+    local self = WritLogger
+    if not self.DAILY_GRID[date] then
+        local dg = {}
+        for char_name,char_row in pairs(self.CHAR) do
+            table.insert(dg, self.DailyBlank())
+        end
+        self.DAILY_GRID[date] = dg
+    end
+    local dg_row    = self.DAILY_GRID[date]
+    local char_row  = self.CHAR[char_name]
+    local char_cell = dg_row[char_row.ord]
+    local id        = self.DescToID(crafting_type, desc2)
+    local craft_row = CRAFT[crafting_type]
+    char_cell[craft_row.ord] = id
+end
