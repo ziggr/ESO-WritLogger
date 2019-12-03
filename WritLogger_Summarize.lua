@@ -115,18 +115,25 @@ WritLogger.REQUIREMENT_ABBREV = {
     }
 }
 
--- Return a 1- or 2-character ID for what this daily writ requires.
-function WritLogger.DescToID(crafting_type, desc2)
+function WritLogger.DailyDescToReq(crafting_type, desc2)
     if not desc2 then return nil end
     local self = WritLogger
     local rlist = self.REQUIREMENT_ABBREV[crafting_type]
     for _,r in ipairs(rlist) do
         for _,d in ipairs(r.desc) do
             if string.find(desc2, d) then
-                return r.abbrev
+                return r
             end
         end
     end
+    return nil
+end
+
+-- Return a 1- or 2-character ID for what this daily writ requires.
+function WritLogger.DescToID(crafting_type, desc2)
+    local self = WritLogger
+    local r = self.DailyDescToReq(crafting_type, desc2)
+    if r then return r.abbrev end
     return nil
 end
 

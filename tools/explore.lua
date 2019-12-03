@@ -38,99 +38,6 @@ for k,v in pairs(CRAFT) do cc[v.type] = v end
 for k,v in ipairs(cc) do CRAFT[k] = v end
 cc = nil
 
--- for desc2 strings to a single abbreviation
-REQUIREMENT_ABBREV = {
-    [CRAFT.ALCHEMY.type] = {
-        ["Damage Stamina Poison IX and acquiring Spider Eggs"       ] = "dam stam + spider eggs"
-    ,   ["Damage Magicka Poison IX and acquiring Violet Coprinus"   ] = "dam mag + violet copr"
-    ,   ["Damage Health Poison IX and acquiring Nightshade"         ] = "dam health + nightshade"
-    ,   ["Drain Health Poison IX and acquiring Lorkhan's Tears"     ] = "drain health + lorkhan's"
-    ,   ["Essence of Health and acquiring some Nirnroot"            ] = "ess health + nirnroot"
-    ,   ["Essence of Magicka and acquiring some Imp Stool"          ] = "ess mag + imp stool"
-    ,   ["Essence of Stamina and acquiring Mudcrab Chitin"          ] = "ess stam + mudcrab"
-    ,   ["Essence of Ravage Health and acquiring Alkahest"          ] = "rav health + alkahest"
-    }
-,   [CRAFT.ENCHANTING.type] = {
-        ["Glyph of Magicka and an Oko Essence Rune"                 ] = "mag + oko"
-    ,   ["Glyph of Magicka and acquiring a Deni Essence Rune"       ] = "mag + deni"
-    ,   ["Glyph of Magicka and acquiring a Makko Essence Rune"      ] = "mag + makko"
-    ,   ["Glyph of Magicka and acquiring a Makkoma Essence Rune"    ] = "mag + makkoma"
-    ,   ["Glyph of Magicka and acquiring an Oko Essence Rune"       ] = "mag + oko"
-    ,   ["Glyph of Magicka and an Oko Essence Rune"                 ] = "mag + oko"
-    ,   ["Glyph of Stamina and acquiring a Ta Aspect Rune"          ] = "stam + ta"
-    ,   ["Glyph of Stamina and a Ta Aspect Rune"                    ] = "stam + ta"
-    ,   ["Glyph of Health and a Jehade Potency Rune"                ] = "health + jehade"
-    ,   ["Glyph of Health and acquiring a Kedeko Potency Rune"      ] = "health + kedeko"
-    ,   ["Glyph of Health and acquiring a Hade Potency Rune"        ] = "health + hade"
-    ,   ["Glyph of Health and acquiring a Pode Potency Rune"        ] = "health + pode"
-    ,   ["Glyph of Health and acquiring an Idode Potency Rune"      ] = "health + idode"
-    }
-,   [CRAFT.PROVISIONING.type] = {
-        ["Baked Apples and Lemon Flower Mazte"                      ] = "dc1a baked apples + lemon flower"
-    ,   ["Carrot Soup and Golden Lager"                             ] = "dc1b carrot soup + golden lager"
-    ,   ["Fishy Stick and Surilie Syrah Wine"                       ] = "dc1c fishy + surilie"
-    ,   ["Pellitine Tomato Rice and Seaflower Tea"                  ] = "dc2a pelletine + seaflower"
-    ,   ["Alik'r Beets with Goat Cheese and Gossamer Matze"         ] = "dc2b alik'r beets + gossamer"
-    ,   ["Breton Pork Sausage and Ginger Wheat Beer"                ] = "dc2c breton pork + ginger wheat"
-    ,   ["Cinnamon Grape Jelly and Torval Mint Tea"                 ] = "dc3a cinnamon grape + torval"
-    ,   ["Garlic Mashed Potatoes and Mulled Wine"                   ] = "dc3b garlic mashed + mulled wine"
-    ,   ["Senchal Curry Fish and Rice and Nereid Wine"              ] = "dc3b senchal curry + nereid wine"
-
-    ,   ["Chicken Breast and Mazte"                                 ] = "ad1a chicken breast + mazte"
-    ,   ["Banana Surprise and Four-Eye Grog"                        ] = "ad1b banana + four-eye"
-    ,   ["Baked Potato and Red Rye Beer"                            ] = "ad1c baked potato + red rye"
-    ,   ["Whiterun Cheese%-Baked Trout and Mermaid Whiskey"         ] = "ad2a whiterun cheese + mermaid"
-    ,   ["Garlic Pumpkin Seeds and Treacleberry Tea"                ] = "ad2b garlic pumpkin + treacleberry"
-    ,   ["Nibenese Garlic Carrots and Barley Nectar"                ] = "ad2c nibenese garlic + barley nectar"
-    ,   ["Elinhir Roast Antelope and Sorry, Honey Lager"            ] = "ad3a elinhir roast + sorry honey"
-    ,   ["Cyrodilic Pumpkin Fritters and Spiceberry Chai"           ] = "ad3b cyrodilic pumpkin + spiceberry"
-    ,   ["Chorrol Corn on the Cob and Spiced Mazte"                 ] = "ad3c chorrol corn + spiced mazte"
-
-    ,   ["Grape Preserves and Clarified Syrah Wine"                 ] = "ep1a grape + clarified"
-    ,   ["Roast Corn and Nut Brown Ale"                             ] = "ep1b roast corn + nut brown ale"
-    ,   ["Chicken Breast and Bog%-Iron Ale"                         ] = "ep1c chicken breast + bog iron ale"
-    ,   ["Redoran Peppered Melon and Bitterlemon Tea"               ] = "ep2a redoran peppered + bitterlemon"
-    ,   ["Battaglir Chowder and Eltheric Hooch"                     ] = "ep2b battaglir + elthiric"
-    ,   ["Venison Pasty and Honey Rye"                              ] = "ep2c venison pasty + honey rye"
-    ,   ["Stormhold Baked Bananas and Maormer Tea"                  ] = "ep3a stormhold baked + maomer tea"
-    ,   ["Jerall View Inn Carrot Cake and Sour Mash"                ] = "ep3b jerall view + sour mash"
-    ,   ["Hare in Garlic Sauce and Rye%-in%-Your%-Eye"              ] = "ep3c hare in garlic + rye-in-your-eye"
-
-    ,   ["Mammoth Snout Pie and Two%-Zephyr Tea"                    ] = "pr4a mammoth snout + two-zephyr"
-    ,   ["Skyrim Jazbay Crostata and Blue Road Marathon"            ] = "pr4b skyrim jazbay + blue road"
-    ,   ["Cyrodilic Cornbread and Gods%-Blind%-Me"                  ] = "pr4c cyrodilic cornbread + gods-blind-me"
-    ,   ["Orcrest Garlic Apple Jelly and Grandpa's Bedtime Tonic"   ] = "pr5a orcrest garlic + grandpa's bedtime"
-    ,   ["West Weald Corn Chowder and Comely Wench Whiskey"         ] = "pr5b west weald + comely wench"
-    ,   ["Millet%-Stuffed Pork Loin and Aetherial Tea"              ] = "pr5c millet-stuffed + aetherial"
-    ,   ["Lilmoth Garlic Hagfish and Hagraven's Tonic"              ] = "pr6a lilmoth + hagraven"
-    ,   ["Hearty Garlic Corn Chowder and Markarth Mead"             ] = "pr6b hearty garlic + markarth"
-    ,   ["Firsthold Fruit and Cheese Plate and Muthsera's Remorse"  ] = "pr6c firsthold + muthsera"
-    }
-,   [CRAFT.CLOTHIER.type] = {
-        ["Robes, Breeches, and Epaulets"        ] = "cl.1 robe breech eps"
-    ,   ["Helmets, Arm Cops, and Bracers"       ] = "cl.2 helm cops bracers"
-    ,   ["Arm Cops, Helmets, and Bracers"       ] = "cl.2 helm cops bracers"
-    ,   ["Shoes, Hats, and Sashes"              ] = "cl.3 shoes hat sash"
-    }
-,   [CRAFT.BLACKSMITHING.type] = {
-        ["Greaves, Swords, and Cuirasses"       ] = "bs.1 sword cuirass greaves"
-    ,   ["Swords, Cuirass, and Greaves"         ] = "bs.1 sword cuirass greaves"
-    ,   ["Helms, Daggers, and Pauldrons"        ] = "bs.2 dagg helm pauldrons"
-    ,   ["Greatswords, Sabatons, and Gauntlets" ] = "bs.3 g-sword sabatons gaunts"
-    }
-,   [CRAFT.WOODWORKING.type] = {
-        ["Restoration Staves and Shields"                   ] = "ww.1 resto shield"
-    ,   ["Bows and Shields"                                 ] = "ww.2 bow shield"
-    ,   ["Inferno Staves, Ice Staves, and Lightning Staves" ] = "ww.3 tri-staff"
-    }
-,   [CRAFT.JEWELRY.type] = {
-        ["three %S+ Rings"                      ] = "jw.1 3 rings"
-    ,   ["%S+ Ring and %S+ Necklace"            ] = "jw.2 ring + neck"
-    ,   ["%S+ Ring and an? %S+ Necklace"        ] = "jw.2 ring + neck"
-    ,   ["two %S+ Necklaces"                    ] = "jw.3 2 necklaces"
-    }
-}
-
 local function AbbreviateMulti(abbr_table, text)
     local abbr_list = {}
     if not text then return abbr_list end
@@ -176,14 +83,13 @@ function AccumulateDaily(input_row, output_row)
 
     local crafting_type = input_row.crafting_type
     local craft         = CRAFT[crafting_type]
-    local req_abbrev    = REQUIREMENT_ABBREV[input_row.crafting_type]
-    if not req_abbrev then
+    local req           = WritLogger.DailyDescToReq(input_row.crafting_type, input_row.desc2)
+    if not req then
         Error("unknown crafting_type:%d", input_row.crafting_type)
         return output
     end
 
-    local abbrev = AbbreviateOne(req_abbrev, input_row.desc2)
-    output_row.req[craft.ord] = abbrev
+    output_row.req[craft.ord] = req.name
     return output
 end
 
