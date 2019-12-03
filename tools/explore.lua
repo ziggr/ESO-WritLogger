@@ -100,7 +100,7 @@ REQUIREMENT_ABBREV = {
     ,   ["Skyrim Jazbay Crostata and Blue Road Marathon"            ] = "pr4b skyrim jazbay + blue road"
     ,   ["Cyrodilic Cornbread and Gods%-Blind%-Me"                  ] = "pr4c cyrodilic cornbread + gods-blind-me"
     ,   ["Orcrest Garlic Apple Jelly and Grandpa's Bedtime Tonic"   ] = "pr5a orcrest garlic + grandpa's bedtime"
-    ,   ["West Weald Corn Chowder and Comely Wench Whisky"          ] = "pr5b west weald + comely wench"
+    ,   ["West Weald Corn Chowder and Comely Wench Whiskey"         ] = "pr5b west weald + comely wench"
     ,   ["Millet%-Stuffed Pork Loin and Aetherial Tea"              ] = "pr5c millet-stuffed + aetherial"
     ,   ["Lilmoth Garlic Hagfish and Hagraven's Tonic"              ] = "pr6a lilmoth + hagraven"
     ,   ["Hearty Garlic Corn Chowder and Markarth Mead"             ] = "pr6b hearty garlic + markarth"
@@ -171,7 +171,7 @@ function AccumulateDaily(input_row, output_row)
         output               = ToOutput(output_row)
         output_row.date      = date
         output_row.char_name = input_row.char_name
-        output_row.req       = { ".", ".", "", "", "", "", "" }
+        output_row.req       = { "", "", "", "", "", "", "" }
     end
 
     local crafting_type = input_row.crafting_type

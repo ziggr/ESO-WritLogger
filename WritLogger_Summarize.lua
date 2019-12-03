@@ -84,7 +84,7 @@ WritLogger.REQUIREMENT_ABBREV = {
     ,   { abbrev = "p2", name = "skyrim jazbay + blue road"          , desc = { "Skyrim Jazbay Crostata and Blue Road Marathon"            } }
     ,   { abbrev = "p3", name = "cyrodilic cornbread + gods-blind-me", desc = { "Cyrodilic Cornbread and Gods%-Blind%-Me"                  } }
     ,   { abbrev = "p4", name = "orcrest garlic + grandpa's bedtime" , desc = { "Orcrest Garlic Apple Jelly and Grandpa's Bedtime Tonic"   } }
-    ,   { abbrev = "p5", name = "west weald + comely wench"          , desc = { "West Weald Corn Chowder and Comely Wench Whisky"          } }
+    ,   { abbrev = "p5", name = "west weald + comely wench"          , desc = { "West Weald Corn Chowder and Comely Wench Whiskey"         } }
     ,   { abbrev = "p6", name = "millet-stuffed + aetherial"         , desc = { "Millet%-Stuffed Pork Loin and Aetherial Tea"              } }
     ,   { abbrev = "p7", name = "lilmoth + hagraven"                 , desc = { "Lilmoth Garlic Hagfish and Hagraven's Tonic"              } }
     ,   { abbrev = "p8", name = "hearty garlic + markarth"           , desc = { "Hearty Garlic Corn Chowder and Markarth Mead"             } }
