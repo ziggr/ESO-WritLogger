@@ -1,4 +1,5 @@
 dofile("../data/WritLogger.lua")
+dofile("../WritLogger_Summarize.lua")
 
                         -- Narrow input range to something
                         -- we want to test
@@ -362,17 +363,22 @@ function ToOutput(output_row)
 end
 
 local output_row = {}
+local one_char_accumulator = {}
+local output_char_accumulator = ""
 for _,input_row in ipairs(input) do
     AccumulateMaster(input_row)
+    local ocacc = WritLogger.AccumulateDaily(input_row, one_char_accumulator)
+    if ocacc then output_char_accumulator = ocacc end
     local line = AccumulateDaily(input_row, output_row)
     if line then
-        print(line)
+        local s = WritLogger.DailyAccumulatorToString(output_char_accumulator)
+        print(s.." "..line)
     end
-
 end
 local last_line = ToOutput(output_row)
 if last_line then
-    print(last_line)
+    local s = WritLogger.DailyAccumulatorToString(output_char_accumulator)
+    print(s.." "..last_line)
 end
 
 OutputMasterList()
