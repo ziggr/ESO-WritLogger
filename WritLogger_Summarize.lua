@@ -28,11 +28,11 @@ WritLogger.REQUIREMENT_ABBREV = {
         { abbrev = "1" , name = "dam stam + spider eggs"             , desc = { "Damage Stamina Poison IX and acquiring Spider Eggs"       } }
     ,   { abbrev = "2" , name = "dam mag + violet copr"              , desc = { "Damage Magicka Poison IX and acquiring Violet Coprinus"   } }
     ,   { abbrev = "3" , name = "dam health + nightshade"            , desc = { "Damage Health Poison IX and acquiring Nightshade"         } }
-    ,   { abbrev = "4" , name = "drain health + lorkhan's"           , desc = { "Drain Health Poison IX and acquiring Lorkhan's Tears"     } }
-    ,   { abbrev = "5" , name = "ess health + nirnroot"              , desc = { "Essence of Health and acquiring some Nirnroot"            } }
+    ,   { abbrev = "4" , name = "rav health + alkahest"              , desc = { "Essence of Ravage Health and acquiring Alkahest"          } }
+    ,   { abbrev = "5" , name = "ess stam + mudcrab"                 , desc = { "Essence of Stamina and acquiring Mudcrab Chitin"          } }
     ,   { abbrev = "6" , name = "ess mag + imp stool"                , desc = { "Essence of Magicka and acquiring some Imp Stool"          } }
-    ,   { abbrev = "7" , name = "ess stam + mudcrab"                 , desc = { "Essence of Stamina and acquiring Mudcrab Chitin"          } }
-    ,   { abbrev = "8" , name = "rav health + alkahest"              , desc = { "Essence of Ravage Health and acquiring Alkahest"          } }
+    ,   { abbrev = "7" , name = "ess health + nirnroot"              , desc = { "Essence of Health and acquiring some Nirnroot"            } }
+    ,   { abbrev = "8" , name = "drain health + lorkhan's"           , desc = { "Drain Health Poison IX and acquiring Lorkhan's Tears"     } }
     }
 ,   [CRAFT.ENCHANTING.type] = {
         { abbrev = "m1", name = "mag + oko"                          , desc = { "Glyph of Magicka and an Oko Essence Rune"                 } }
@@ -50,9 +50,9 @@ WritLogger.REQUIREMENT_ABBREV = {
     ,   { abbrev = "h5", name = "health + idode"                     , desc = { "Glyph of Health and acquiring an Idode Potency Rune"      } }
     }
 ,   [CRAFT.PROVISIONING.type] = {
-        { abbrev = "d1", name = "baked apples + lemon flower"        , desc = { "Baked Apples and Lemon Flower Mazte"                      } }
-    ,   { abbrev = "d2", name = "carrot soup + golden lager"         , desc = { "Carrot Soup and Golden Lager"                             } }
-    ,   { abbrev = "d3", name = "fishy + surilie"                    , desc = { "Fishy Stick and Surilie Syrah Wine"                       } }
+        { abbrev = "d1", name = "fishy + surilie"                    , desc = { "Fishy Stick and Surilie Syrah Wine"                       } }
+    ,   { abbrev = "d2", name = "baked apples + lemon flower"        , desc = { "Baked Apples and Lemon Flower Mazte"                      } }
+    ,   { abbrev = "d3", name = "carrot soup + golden lager"         , desc = { "Carrot Soup and Golden Lager"                             } }
     ,   { abbrev = "d4", name = "pelletine + seaflower"              , desc = { "Pellitine Tomato Rice and Seaflower Tea"                  } }
     ,   { abbrev = "d5", name = "alik'r beets + gossamer"            , desc = { "Alik'r Beets with Goat Cheese and Gossamer Matze"         } }
     ,   { abbrev = "d6", name = "breton pork + ginger wheat"         , desc = { "Breton Pork Sausage and Ginger Wheat Beer"                } }
@@ -70,12 +70,12 @@ WritLogger.REQUIREMENT_ABBREV = {
     ,   { abbrev = "a8", name = "cyrodilic pumpkin + spiceberry"     , desc = { "Cyrodilic Pumpkin Fritters and Spiceberry Chai"           } }
     ,   { abbrev = "a9", name = "chorrol corn + spiced mazte"        , desc = { "Chorrol Corn on the Cob and Spiced Mazte"                 } }
 
-    ,   { abbrev = "e1", name = "grape + clarified"                  , desc = { "Grape Preserves and Clarified Syrah Wine"                 } }
-    ,   { abbrev = "e2", name = "roast corn + nut brown ale"         , desc = { "Roast Corn and Nut Brown Ale"                             } }
-    ,   { abbrev = "e3", name = "chicken breast + bog iron ale"      , desc = { "Chicken Breast and Bog%-Iron Ale"                         } }
-    ,   { abbrev = "e4", name = "redoran peppered + bitterlemon"     , desc = { "Redoran Peppered Melon and Bitterlemon Tea"               } }
-    ,   { abbrev = "e5", name = "battaglir + elthiric"               , desc = { "Battaglir Chowder and Eltheric Hooch"                     } }
-    ,   { abbrev = "e6", name = "venison pasty + honey rye"          , desc = { "Venison Pasty and Honey Rye"                              } }
+    ,   { abbrev = "e1", name = "chicken breast + bog iron ale"      , desc = { "Chicken Breast and Bog%-Iron Ale"                         } }
+    ,   { abbrev = "e2", name = "grape + clarified"                  , desc = { "Grape Preserves and Clarified Syrah Wine"                 } }
+    ,   { abbrev = "e3", name = "roast corn + nut brown ale"         , desc = { "Roast Corn and Nut Brown Ale"                             } }
+    ,   { abbrev = "e4", name = "venison pasty + honey rye"          , desc = { "Venison Pasty and Honey Rye"                              } }
+    ,   { abbrev = "e5", name = "redoran peppered + bitterlemon"     , desc = { "Redoran Peppered Melon and Bitterlemon Tea"               } }
+    ,   { abbrev = "e6", name = "battaglir + elthiric"               , desc = { "Battaglir Chowder and Eltheric Hooch"                     } }
     ,   { abbrev = "e7", name = "stormhold baked + maomer tea"       , desc = { "Stormhold Baked Bananas and Maormer Tea"                  } }
     ,   { abbrev = "e8", name = "jerall view + sour mash"            , desc = { "Jerall View Inn Carrot Cake and Sour Mash"                } }
     ,   { abbrev = "e9", name = "hare in garlic + rye-in-your-eye"   , desc = { "Hare in Garlic Sauce and Rye%-in%-Your%-Eye"              } }
@@ -83,12 +83,12 @@ WritLogger.REQUIREMENT_ABBREV = {
     ,   { abbrev = "p1", name = "mammoth snout + two-zephyr"         , desc = { "Mammoth Snout Pie and Two%-Zephyr Tea"                    } }
     ,   { abbrev = "p2", name = "skyrim jazbay + blue road"          , desc = { "Skyrim Jazbay Crostata and Blue Road Marathon"            } }
     ,   { abbrev = "p3", name = "cyrodilic cornbread + gods-blind-me", desc = { "Cyrodilic Cornbread and Gods%-Blind%-Me"                  } }
-    ,   { abbrev = "p4", name = "orcrest garlic + grandpa's bedtime" , desc = { "Orcrest Garlic Apple Jelly and Grandpa's Bedtime Tonic"   } }
-    ,   { abbrev = "p5", name = "west weald + comely wench"          , desc = { "West Weald Corn Chowder and Comely Wench Whiskey"         } }
-    ,   { abbrev = "p6", name = "millet-stuffed + aetherial"         , desc = { "Millet%-Stuffed Pork Loin and Aetherial Tea"              } }
+    ,   { abbrev = "p4", name = "millet-stuffed + aetherial"         , desc = { "Millet%-Stuffed Pork Loin and Aetherial Tea"              } }
+    ,   { abbrev = "p5", name = "orcrest garlic + grandpa's bedtime" , desc = { "Orcrest Garlic Apple Jelly and Grandpa's Bedtime Tonic"   } }
+    ,   { abbrev = "p6", name = "west weald + comely wench"          , desc = { "West Weald Corn Chowder and Comely Wench Whiskey"         } }
     ,   { abbrev = "p7", name = "lilmoth + hagraven"                 , desc = { "Lilmoth Garlic Hagfish and Hagraven's Tonic"              } }
-    ,   { abbrev = "p8", name = "hearty garlic + markarth"           , desc = { "Hearty Garlic Corn Chowder and Markarth Mead"             } }
-    ,   { abbrev = "p9", name = "firsthold + muthsera"               , desc = { "Firsthold Fruit and Cheese Plate and Muthsera's Remorse"  } }
+    ,   { abbrev = "p8", name = "firsthold + muthsera"               , desc = { "Firsthold Fruit and Cheese Plate and Muthsera's Remorse"  } }
+    ,   { abbrev = "p9", name = "hearty garlic + markarth"           , desc = { "Hearty Garlic Corn Chowder and Markarth Mead"             } }
     }
 ,   [CRAFT.CLOTHIER.type] = {
         { abbrev = "1" , name = "robe breech eps"                    , desc = { "Robes, Breeches, and Epaulets"                            } }
