@@ -90,7 +90,9 @@ function AccumulateDaily(input_row, output_row)
     local craft         = CRAFT[crafting_type]
     local req           = WritLogger.DailyDescToReq(input_row.crafting_type, input_row.desc2)
     if not req then
-        Error("unknown crafting_type:%d", input_row.crafting_type)
+        error(string.format( "unknown req for crafting_type:%d desc:%s"
+                           , input_row.crafting_type
+                           , input_row.desc2 ))
         return output
     end
 
@@ -285,7 +287,7 @@ function OutputDailyGrid()
         local dg_line = { date }
         local dg_row = self.DAILY_GRID[date]
         for char_ord, char_row in ipairs(self.CHAR) do
-            local char_cell = dg_row[char_ord] or self.DailyBlank()
+            local char_cell = (dg_row and dg_row[char_ord]) or self.DailyBlank()
             local s = table.concat(char_cell, "")
             table.insert(dg_line, s)
         end

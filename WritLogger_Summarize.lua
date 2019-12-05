@@ -48,6 +48,7 @@ WritLogger.REQUIREMENT_ABBREV = {
     ,   { abbrev = "h3", name = "health + hade"                      , desc = { "Glyph of Health and acquiring a Hade Potency Rune"        } }
     ,   { abbrev = "h4", name = "health + pode"                      , desc = { "Glyph of Health and acquiring a Pode Potency Rune"        } }
     ,   { abbrev = "h5", name = "health + idode"                     , desc = { "Glyph of Health and acquiring an Idode Potency Rune"      } }
+    ,   { abbrev = "h5", name = "health + rede"                      , desc = { "Glyph of Health and acquiring a Rede Potency Rune"        } }
     }
 ,   [CRAFT.PROVISIONING.type] = {
         { abbrev = "d1", name = "fishy + surilie"                    , desc = { "Fishy Stick and Surilie Syrah Wine"                       } }
