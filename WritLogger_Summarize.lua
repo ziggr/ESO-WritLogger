@@ -25,22 +25,22 @@ cc = nil
 -- shorten desc2 strings to a single abbreviation
 WritLogger.REQUIREMENT_ABBREV = {
     [CRAFT.ALCHEMY.type] = {
-        { abbrev = "1" , name = "dam stam + spider eggs"             , desc = { "Damage Stamina Poison IX and acquiring Spider Eggs"       } }
-    ,   { abbrev = "2" , name = "dam mag + violet copr"              , desc = { "Damage Magicka Poison IX and acquiring Violet Coprinus"   } }
-    ,   { abbrev = "3" , name = "dam health + nightshade"            , desc = { "Damage Health Poison IX and acquiring Nightshade"         } }
-    ,   { abbrev = "4" , name = "rav health + alkahest"              , desc = { "Essence of Ravage Health and acquiring Alkahest"          } }
-    ,   { abbrev = "5" , name = "ess stam + mudcrab"                 , desc = { "Essence of Stamina and acquiring Mudcrab Chitin"          } }
-    ,   { abbrev = "6" , name = "ess mag + imp stool"                , desc = { "Essence of Magicka and acquiring some Imp Stool"          } }
-    ,   { abbrev = "7" , name = "ess health + nirnroot"              , desc = { "Essence of Health and acquiring some Nirnroot"            } }
-    ,   { abbrev = "8" , name = "drain health + lorkhan's"           , desc = { "Drain Health Poison IX and acquiring Lorkhan's Tears"     } }
+        { abbrev = "1" , name = "drain health + lorkhan's"           , desc = { "Drain Health Poison IX and acquiring Lorkhan's Tears"     } }
+    ,   { abbrev = "2" , name = "dam stam + spider eggs"             , desc = { "Damage Stamina Poison IX and acquiring Spider Eggs"       } }
+    ,   { abbrev = "3" , name = "dam mag + violet copr"              , desc = { "Damage Magicka Poison IX and acquiring Violet Coprinus"   } }
+    ,   { abbrev = "4" , name = "dam health + nightshade"            , desc = { "Damage Health Poison IX and acquiring Nightshade"         } }
+    ,   { abbrev = "5" , name = "rav health + alkahest"              , desc = { "Essence of Ravage Health and acquiring Alkahest"          } }
+    ,   { abbrev = "6" , name = "ess stam + mudcrab"                 , desc = { "Essence of Stamina and acquiring Mudcrab Chitin"          } }
+    ,   { abbrev = "7" , name = "ess mag + imp stool"                , desc = { "Essence of Magicka and acquiring some Imp Stool"          } }
+    ,   { abbrev = "8" , name = "ess health + nirnroot"              , desc = { "Essence of Health and acquiring some Nirnroot"            } }
     }
 ,   [CRAFT.ENCHANTING.type] = {
-        { abbrev = "m1", name = "mag + oko"                          , desc = { "Glyph of Magicka and an Oko Essence Rune"                 } }
-    ,   { abbrev = "m2", name = "mag + deni"                         , desc = { "Glyph of Magicka and acquiring a Deni Essence Rune"       } }
-    ,   { abbrev = "m3", name = "mag + makko"                        , desc = { "Glyph of Magicka and acquiring a Makko Essence Rune"      } }
-    ,   { abbrev = "m4", name = "mag + makkoma"                      , desc = { "Glyph of Magicka and acquiring a Makkoma Essence Rune"    } }
-    ,   { abbrev = "m5", name = "mag + oko"                          , desc = { "Glyph of Magicka and acquiring an Oko Essence Rune"
-                                                                              , "Glyph of Magicka and an Oko Essence Rune"                 } }
+        { abbrev = "m1", name = "mag + oko"                          , desc = { "Glyph of Magicka and an Oko Essence Rune"
+                                                                              , "Glyph of Magicka and acquiring an Oko Essence Rune"       } }
+    ,   { abbrev = "m2", name = "mag + denima"                       , desc = { "Glyph of Magicka and acquiring a Denima Essence Rune"     } }
+    ,   { abbrev = "m3", name = "mag + deni"                         , desc = { "Glyph of Magicka and acquiring a Deni Essence Rune"       } }
+    ,   { abbrev = "m4", name = "mag + makko"                        , desc = { "Glyph of Magicka and acquiring a Makko Essence Rune"      } }
+    ,   { abbrev = "m5", name = "mag + makkoma"                      , desc = { "Glyph of Magicka and acquiring a Makkoma Essence Rune"    } }
     ,   { abbrev = "s1", name = "stam + ta"                          , desc = { "Glyph of Stamina and acquiring a Ta Aspect Rune"
                                                                               , "Glyph of Stamina and a Ta Aspect Rune"                    } }
     ,   { abbrev = "h1", name = "health + jehade"                    , desc = { "Glyph of Health and a Jehade Potency Rune"                } }
@@ -48,7 +48,7 @@ WritLogger.REQUIREMENT_ABBREV = {
     ,   { abbrev = "h3", name = "health + hade"                      , desc = { "Glyph of Health and acquiring a Hade Potency Rune"        } }
     ,   { abbrev = "h4", name = "health + pode"                      , desc = { "Glyph of Health and acquiring a Pode Potency Rune"        } }
     ,   { abbrev = "h5", name = "health + idode"                     , desc = { "Glyph of Health and acquiring an Idode Potency Rune"      } }
-    ,   { abbrev = "h5", name = "health + rede"                      , desc = { "Glyph of Health and acquiring a Rede Potency Rune"        } }
+    ,   { abbrev = "h6", name = "health + rede"                      , desc = { "Glyph of Health and acquiring a Rede Potency Rune"        } }
     }
 ,   [CRAFT.PROVISIONING.type] = {
         { abbrev = "d1", name = "fishy + surilie"                    , desc = { "Fishy Stick and Surilie Syrah Wine"                       } }
