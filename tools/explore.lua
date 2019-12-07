@@ -77,7 +77,8 @@ function AccumulateDaily(input_row, output_row)
     local output   = nil
     local date     = input_row.time:sub(1,10)
 
-    WritLogger.DailyRecord( date
+    WritLogger.DailyRecordSummary(
+                            date
                           , input_row.char_name
                           , input_row.crafting_type
                           , input_row.desc2 )

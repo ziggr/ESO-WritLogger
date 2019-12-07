@@ -23,6 +23,7 @@ push @files, 'WritLogger.txt';
 push @files, 'WritLogger_Daily.lua';
 push @files, 'WritLogger_Master.lua';
 push @files, 'WritLogger_Log.lua';
+push @files, 'WritLogger_Summarize.lua';
 print join("\n", @files) . "\n";
 
 @prev_mtime = ();

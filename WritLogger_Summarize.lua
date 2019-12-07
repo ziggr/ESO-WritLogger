@@ -229,7 +229,7 @@ end
                         --   ["date"] = "char1 char2 char3 ... char11"
 WritLogger.DAILY_GRID = {}
 
-function WritLogger.DailyRecord(date, char_name, crafting_type, desc2)
+function WritLogger.DailyRecordSummary(date, char_name, crafting_type, desc2)
     local self = WritLogger
     if not self.DAILY_GRID[date] then
         local dg = {}
@@ -310,7 +310,7 @@ end
 -- correct spot in a 180-character-long summary line.
 function WritLogger.RecordToSummary(date, char_name, crafting_type, req_id)
     local self = WritLogger
-    assert(req_id)
+    -- self.Logger():Debug("RecordToSummary d:%s c:%s ct:%d r:%s", date, char_name, crafting_type, req_id)
     local summary_line, summary_line_index = self.FindSummaryLine(date)
     local pos = self.DailySummaryCharPos(char_name, crafting_type)
 

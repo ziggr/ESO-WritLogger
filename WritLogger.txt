@@ -41,4 +41,5 @@ WritLogger_Version.lua
 WritLogger_Util.lua
 WritLogger_Daily.lua
 WritLogger_Master.lua
+WritLogger_Summarize.lua
 WritLogger.lua
