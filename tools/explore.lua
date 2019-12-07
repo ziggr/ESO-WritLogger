@@ -1,6 +1,9 @@
 dofile("../data/WritLogger.lua")
 dofile("../WritLogger_Summarize.lua")
 
+WritLogger = WritLogger or {}
+WritLogger.saved_vars = WritLogger.saved_vars or WritLoggerVars["Default"]["@ziggr"]["$AccountWide"]
+
                         -- Narrow input range to something
                         -- we want to test
 local INPUT_LOG   = WritLoggerVars["Default"]["@ziggr"]["$AccountWide"]["log"]
@@ -297,7 +300,17 @@ function OutputDailyGrid()
     end
 end
 
+function OutputSummary()
+    local sl = WritLogger.saved_vars.summary_lines
+    if not sl then print("sv.summary_lines = nil")
+        return
+    end
+    print(string.format("Summary lines: %d", #sl))
+    for i,line in ipairs(sl) do
+        print(line)
+    end
 
+end
 
 local output_row = {}
 local one_char_accumulator = {}
@@ -320,5 +333,29 @@ end
 
 OutputDailyGrid()
 OutputMasterList()
+OutputSummary()
 
 
+--[[
+AL  8 options = 3 bits
+EN 12 options = 4 bits
+PR 36 options = 6 bits (4 choices 2 bits for d/a/e/p, 9 choices 4 bits recipes)
+CL  3 options = 2 bits
+BS  "           2 bits
+WW  "           2 bits
+JW  "           2 bits
+
+21 bits total.
+    - 3 bytes binary
+    - 6 chars hex
+    - 7 chars octal
+    - 10 bytes as-is ascii
+    - 2^21 = 7-digit decimal
+
+
+Read desc2 log, write to grid, store grid
+
+char + crafting type --> starting char position
+blank is all spaces
+
+]]

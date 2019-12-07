@@ -15,6 +15,7 @@ local CRAFT = {
 ,   ["ENCHANTING"   ] = { ord = 6, type = 3, abbrev = "en" }
 ,   ["PROVISIONING" ] = { ord = 7, type = 5, abbrev = "pr" }
 }
+
                         -- Index craft by numeric CRAFTING_TYPE_X
                         -- in addition to above index by symbol.
 local cc = {}
@@ -185,6 +186,7 @@ function WritLogger.AccumulateDaily(input, accumulator)
     local id  = self.DescToID(input.crafting_type, input.desc2)
     if id then
         accumulator.req_id_list[ord] = id
+        self.RecordToSummary(date, input.char_name, input.crafting_type, id)
     end
     return output_accumulator
 end
@@ -243,3 +245,79 @@ function WritLogger.DailyRecord(date, char_name, crafting_type, desc2)
     local craft_row = CRAFT[crafting_type]
     char_cell[craft_row.ord] = id
 end
+
+-- Return the starting character position for this crafting type's
+-- 1- or 2- character spot within a 180-character-long summary line.
+function WritLogger.DailySummaryCharPos(char_name, crafting_type)
+    local self = WritLogger
+    local blank       = table.concat(self.DailyBlank(),"")
+    local char_width  = #blank + 1  -- +1 for space
+
+                            -- first char (Zithara) starts here
+    local char1_start = 12  -- after 11-char date + 1-char space
+
+    local char_ord = self.CHAR[char_name] and self.CHAR[char_name].ord
+    if not char_ord then
+        error(string.format("WritLogger: Unknown character:'%s'", tostring(char_name)))
+    end
+    local charN_start = char1_start + (char_ord-1) * char_width
+
+    local craft_ord = CRAFT[crafting_type] and CRAFT[crafting_type].ord
+    if not craft_ord then
+        error(string.format( "WritLogger: Unknown crafting_type:%s"
+                           , tostring(crafting_type) ))
+    end
+
+    local craft_offset = craft_ord - 1
+                            -- Enchanting takes 2 chars, bumps
+                            -- provisioning down 1 additional char.
+    if craft_ord > 6 then
+        craft_offset = craft_offset + 1
+    end
+
+    return charN_start + craft_offset
+end
+
+function WritLogger.FindSummaryLine(date)
+    local self = WritLogger
+    self.saved_vars.summary_lines = self.saved_vars.summary_lines or {}
+    local sl = self.saved_vars.summary_lines
+
+                        -- +++ O(n) scan, but start at the end where the most
+                        --     recent dates are, since we almost always add
+                        --     to today's line.
+    for i = #sl,1,-1 do
+                        --   1 = start search at start of sl[i]
+                        -- true = plain search, treat '-' as normal
+                        --        character, not range delimiter.
+        if string.find(sl[i]:sub(1,20), date, 1, true) then
+            return sl[i], i
+        end
+    end
+                        -- Construct a blank summary line.
+                        -- Could replace with string.rep(daily_blank, char_ct).
+    local daily_blank   = table.concat(self.DailyBlank(),"")
+    local t = { date }
+    for _,__ in ipairs(self.CHAR) do
+        table.insert(t, daily_blank)
+    end
+    local line = table.concat(t," ")
+    table.insert(sl, line)
+    return line, #sl
+end
+
+-- Write a 1- or 2-character requirement id ("1", "m3", "p2") into its
+-- correct spot in a 180-character-long summary line.
+function WritLogger.RecordToSummary(date, char_name, crafting_type, req_id)
+    local self = WritLogger
+    assert(req_id)
+    local summary_line, summary_line_index = self.FindSummaryLine(date)
+    local pos = self.DailySummaryCharPos(char_name, crafting_type)
+
+    local left  = summary_line:sub(1,pos-1)
+    local right = summary_line:sub(pos+#req_id)
+    local new_summary_line = left .. req_id .. right
+
+    self.saved_vars.summary_lines[summary_line_index] = new_summary_line
+end
+
