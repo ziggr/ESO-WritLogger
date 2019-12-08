@@ -280,8 +280,8 @@ end
 
 function WritLogger.FindSummaryLine(date)
     local self = WritLogger
-    self.saved_vars.summary_lines = self.saved_vars.summary_lines or {}
-    local sl = self.saved_vars.summary_lines
+    self.saved_vars.daily = self.saved_vars.daily or {}
+    local sl = self.saved_vars.daily
 
                         -- +++ O(n) scan, but start at the end where the most
                         --     recent dates are, since we almost always add
@@ -318,7 +318,7 @@ function WritLogger.RecordToSummary(date, char_name, crafting_type, req_id)
     local right = summary_line:sub(pos+#req_id)
     local new_summary_line = left .. req_id .. right
 
-    self.saved_vars.summary_lines[summary_line_index] = new_summary_line
+    self.saved_vars.daily[summary_line_index] = new_summary_line
 end
 
 function WritLogger.SummarizeMaster(date, char_name, crafting_type, item_link)

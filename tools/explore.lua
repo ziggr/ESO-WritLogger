@@ -302,8 +302,8 @@ function OutputDailyGrid()
 end
 
 function OutputSummary()
-    local sl = WritLogger.saved_vars.summary_lines
-    if not sl then print("sv.summary_lines = nil")
+    local sl = WritLogger.saved_vars.daily
+    if not sl then print("sv.daily = nil")
         return
     end
     print(string.format("Summary lines: %d", #sl))
