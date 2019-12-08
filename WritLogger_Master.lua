@@ -44,6 +44,14 @@ function WritLogger.MasterRecord(item_link)
     row.quest_type    = self.QTYPE.MASTER
     row.crafting_type = crafting_type
     row.item_link     = item_link
+
+    local line = self.SummarizeMaster( row.time:sub(1,10)
+                                     , row.char_name
+                                     , row.crafting_type
+                                     , row.item_link
+                                     )
+    self.saved_vars.master = self.saved_vars.master or {}
+    table.insert(self.saved_vars.master, line)
     self.RecordRow(row)
 end
 

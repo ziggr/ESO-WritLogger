@@ -34,3 +34,6 @@ zip:
 
 explore:
 	cd tools ; lua explore.lua
+
+master_summary:
+	cd tools ; lua master_extract.lua

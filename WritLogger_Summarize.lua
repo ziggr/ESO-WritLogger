@@ -321,3 +321,13 @@ function WritLogger.RecordToSummary(date, char_name, crafting_type, req_id)
     self.saved_vars.summary_lines[summary_line_index] = new_summary_line
 end
 
+function WritLogger.SummarizeMaster(date, char_name, crafting_type, item_link)
+    local self = WritLogger
+    local char_ord = self.CHAR[char_name].ord
+    return string.format( "%s %d %d %s"
+                        , date
+                        , char_ord
+                        , crafting_type
+                        , item_link
+                        )
+end
