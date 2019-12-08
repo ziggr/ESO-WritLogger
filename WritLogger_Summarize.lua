@@ -290,7 +290,7 @@ function WritLogger.FindSummaryLine(date)
                         --   1 = start search at start of sl[i]
                         -- true = plain search, treat '-' as normal
                         --        character, not range delimiter.
-        if string.find(sl[i]:sub(1,20), date, 1, true) then
+        if sl[i] and string.find(sl[i]:sub(1,10), date, 1, true) then
             return sl[i], i
         end
     end

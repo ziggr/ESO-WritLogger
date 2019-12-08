@@ -65,7 +65,7 @@ function WritLogger.DailyRecord(quest_index, crafting_type)
                 , crafting_type = crafting_type
                 , desc2         = qinfo[self.JQI.active_step_text]
                 }
-    self.RecordRow(row)
+    -- self.RecordRow(row)
 
     local date = row.time:sub(1,10)
     local req_id  = self.DescToID(crafting_type, row.desc2)
