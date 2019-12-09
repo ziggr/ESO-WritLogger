@@ -69,6 +69,13 @@ function WritLogger.DailyRecord(quest_index, crafting_type)
 
     local date = row.time:sub(1,10)
     local req_id  = self.DescToID(crafting_type, row.desc2)
+    if not req_id then
+        self.Logger():Error( "Unknown req_id for ct:%d desc2:%s"
+                           , crafting_type
+                           , row.desc2 )
+        self.saved_vars.errors = self.saved_vars.errors or {}
+        table.insert(self.saved_vars.errors, row)
+    end
     self.RecordToSummary( date
                         , row.char_name
                         , crafting_type

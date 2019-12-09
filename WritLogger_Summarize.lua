@@ -95,6 +95,7 @@ WritLogger.REQUIREMENT_ABBREV = {
 ,   [CRAFT.CLOTHIER.type] = {
         { abbrev = "1" , name = "robe breech eps"                    , desc = { "Robes, Breeches, and Epaulets"                            } }
     ,   { abbrev = "2" , name = "helm cops bracers"                  , desc = { "Helmets, Arm Cops, and Bracers"
+                                                                              , "Helmet, Arm Cops, and Bracers"
                                                                               , "Arm Cops, Helmets, and Bracers"                           } }
     ,   { abbrev = "3" , name = "shoes hat sash"                     , desc = { "Shoes, Hats, and Sashes"                                  } }
     }
